@@ -8,7 +8,7 @@ Projet réalisé en 2 semaines avec **Spring Boot** (backend) et **Angular** (fr
 
 ## 📹 Démonstration vidéo
 
-👉 [Voir la démonstration sur Google Drive](LIEN_DRIVE_À_COMPLÉTER)
+👉 [Voir la démonstration sur Google Drive]  https://drive.google.com/drive/folders/1oSTo-tRvdhNdprni0znY4UAJr2xdQ0UL?usp=sharing
 
 ## 📄 Rapport de projet
 
