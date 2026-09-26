@@ -1,1 +1,9 @@
 backend/uploads/
+.DS_Store
+./backend/.DS_Store
+./backend/src/.DS_Store
+./backend/src/main/.DS_Store
+./backend/src/main/java/.DS_Store
+./backend/src/main/java/com/.DS_Store
+./backend/src/main/java/com/hackathon/.DS_Store
+./backend/src/main/java/com/hackathon/hackathon_platform/.DS_Store
