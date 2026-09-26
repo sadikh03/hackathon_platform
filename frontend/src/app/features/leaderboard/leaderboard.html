@@ -1,0 +1,46 @@
+<div class="page-container">
+
+  <div class="page-header">
+    <h1>Classement</h1>
+    <p>Classement des équipes selon la moyenne des notes reçues</p>
+  </div>
+
+  @if (leaderboardResource.isLoading()) {
+    <div class="loading-state">Chargement du classement...</div>
+  }
+
+  @if (leaderboardResource.error()) {
+    <div class="error-banner">Impossible de charger le classement</div>
+  }
+
+  @if (entries().length > 0) {
+    <div class="leaderboard-list">
+      @for (entry of entries(); track entry.projectId) {
+        <div class="leaderboard-row" [class.top-three]="entry.rank <= 3">
+          <div class="rank-badge" [class.gold]="entry.rank === 1" [class.silver]="entry.rank === 2" [class.bronze]="entry.rank === 3">
+            #{{ entry.rank }}
+          </div>
+
+          <div class="entry-info">
+            <h3>
+              {{ entry.teamName }}
+              @if (entry.rank === 1) {
+                <span class="winner-badge">🏆 Gagnant</span>
+              }
+            </h3>
+            <p>{{ entry.projectTitle }}</p>
+          </div>
+
+          <div class="entry-score">
+            <span class="score-value">{{ entry.averageScore }}</span>
+            <span class="score-label">/ 10</span>
+            <span class="evaluations-count">{{ entry.evaluationsCount }} évaluation(s)</span>
+          </div>
+        </div>
+      }
+    </div>
+  } @else if (!leaderboardResource.isLoading()) {
+    <p class="empty-state">Aucun projet classé pour l'instant.</p>
+  }
+
+</div>

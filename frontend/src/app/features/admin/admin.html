@@ -1,0 +1,91 @@
+<div class="page-container">
+
+  <div class="page-header">
+    <h1>Administration</h1>
+    <p>Gestion des utilisateurs et des réglages du hackathon</p>
+  </div>
+
+  @if (actionError()) {
+    <div class="error-banner">{{ actionError() }}</div>
+  }
+  @if (actionSuccess()) {
+    <div class="success-banner">{{ actionSuccess() }}</div>
+  }
+
+  <div class="tabs">
+    <button
+      class="tab-btn"
+      [class.active]="activeTab() === 'users'"
+      (click)="setTab('users')">
+      Utilisateurs
+    </button>
+    <button
+      class="tab-btn"
+      [class.active]="activeTab() === 'settings'"
+      (click)="setTab('settings')">
+      Réglages
+    </button>
+  </div>
+
+  @if (activeTab() === 'users') {
+    <div class="tab-content">
+      @if (usersResource.isLoading()) {
+        <div class="loading-state">Chargement...</div>
+      }
+
+      @if (usersResource.value(); as users) {
+        <table class="users-table">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Rôle</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (user of users; track user.id) {
+              <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                  <select [ngModel]="user.role" (ngModelChange)="changeRole(user.id, $event)" class="role-select">
+                    @for (r of roles; track r) {
+                        <option [value]="r">{{ r.replace('ROLE_', '') }}</option>
+                    }
+                  </select>
+                </td>
+                <td>
+                  <button (click)="deleteUser(user.id)" class="btn-danger">Supprimer</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+  }
+
+  @if (activeTab() === 'settings') {
+    <div class="tab-content">
+      <div class="settings-card">
+        <h3>Deadline de soumission</h3>
+
+        @if (deadlineResource.value(); as deadline) {
+          <p class="current-deadline">
+            Actuelle : {{ deadline.submissionDeadline || 'Aucune deadline définie' }}
+          </p>
+        }
+
+        <div class="deadline-form">
+          <input
+            type="datetime-local"
+            [ngModel]="newDeadline()"
+            (ngModelChange)="newDeadline.set($event)" />
+          <button (click)="updateDeadline()" class="btn-primary">Mettre à jour</button>
+        </div>
+      </div>
+    </div>
+  }
+
+</div>

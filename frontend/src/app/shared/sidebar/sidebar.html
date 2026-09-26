@@ -1,0 +1,76 @@
+<aside class="sidebar">
+
+  <div class="sidebar-header">
+  <div class="logo-group">
+    <div class="logo-circle">H</div>
+    <span class="logo-text">Hackathon</span>
+  </div>
+
+  <div class="notif-bell-wrapper">
+    <button class="notif-bell" (click)="togglePanel()">
+      🔔
+      @if ((unreadCountResource.value()?.count ?? 0) > 0) {
+        <span class="notif-count">{{ unreadCountResource.value()?.count }}</span>
+      }
+    </button>
+
+    @if (showPanel()) {
+      <div class="notif-panel">
+        <div class="notif-panel-header">
+          <span>Notifications</span>
+          <button (click)="markAllAsRead()" class="mark-all-btn">Tout marquer lu</button>
+        </div>
+
+        @if (notificationsResource.value(); as notifications) {
+          <div class="notif-list">
+            @for (notif of notifications; track notif.id) {
+              <div class="notif-item" [class.unread]="!notif.isRead" (click)="markAsRead(notif.id)">
+                <p>{{ notif.message }}</p>
+              </div>
+            } @empty {
+              <p class="notif-empty">Aucune notification</p>
+            }
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>
+
+  <nav class="sidebar-nav">
+    <a routerLink="/teams" routerLinkActive="active" class="nav-item">
+      <span class="nav-icon">👥</span>
+      Équipes
+    </a>
+
+    <a routerLink="/projects" routerLinkActive="active" class="nav-item">
+      <span class="nav-icon">💡</span>
+      Projets
+    </a>
+
+
+    @if (authService.hasRole('ROLE_ADMIN')) {
+        <a routerLink="/admin" routerLinkActive="active" class="nav-item">
+            <span class="nav-icon">⚙️</span>
+            Administration
+        </a>
+    }
+
+    <a routerLink="/leaderboard" routerLinkActive="active" class="nav-item">
+      <span class="nav-icon">🏆</span>
+      Classement
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="user-card">
+      <div class="user-avatar">{{ authService.currentUsername()?.charAt(0)?.toUpperCase() }}</div>
+      <div class="user-info">
+        <span class="user-name">{{ authService.currentUsername() }}</span>
+        <span class="user-role">{{ authService.currentRole() }}</span>
+      </div>
+    </div>
+    <button (click)="onLogout()" class="logout-btn">Déconnexion</button>
+  </div>
+
+</aside>

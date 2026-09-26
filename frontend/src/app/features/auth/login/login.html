@@ -1,0 +1,44 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <h1 class="auth-title">Bienvenue</h1>
+    <p class="auth-subtitle">Connectez-vous pour accéder à la plateforme</p>
+
+    <form (ngSubmit)="onSubmit()" class="auth-form">
+
+      <div class="form-group">
+        <label for="username">Nom d'utilisateur</label>
+        <input
+          id="username"
+          type="text"
+          [(ngModel)]="credentials.username"
+          name="username"
+          required
+          placeholder="Votre username" />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input
+          id="password"
+          type="password"
+          [(ngModel)]="credentials.password"
+          name="password"
+          required
+          placeholder="Votre mot de passe" />
+      </div>
+
+      @if (errorMessage()) {
+        <div class="error-banner">{{ errorMessage() }}</div>
+      }
+
+      <button type="submit" class="btn-primary" [disabled]="isLoading()">
+        {{ isLoading() ? 'Connexion...' : 'Se connecter' }}
+      </button>
+
+    </form>
+
+    <p class="auth-footer">
+      Pas encore de compte ? <a routerLink="/register">S'inscrire</a>
+    </p>
+  </div>
+</div>

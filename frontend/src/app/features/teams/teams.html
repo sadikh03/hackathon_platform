@@ -1,0 +1,59 @@
+<div class="page-container">
+
+  <div class="page-header">
+    <h1>Équipes</h1>
+    <p>Créez ou rejoignez une équipe pour le hackathon</p>
+  </div>
+
+  @if (actionError()) {
+    <div class="error-banner">{{ actionError() }}</div>
+  }
+
+  <div class="create-team-card">
+    <input
+      type="text"
+      [ngModel]="newTeamName()"
+      (ngModelChange)="newTeamName.set($event)"
+      placeholder="Nom de la nouvelle équipe"
+      class="team-input" />
+    <button (click)="createTeam()" class="btn-primary">Créer une équipe</button>
+  </div>
+
+  @if (teamsResource.isLoading()) {
+    <div class="loading-state">Chargement des équipes...</div>
+  }
+
+  @if (teamsResource.error()) {
+    <div class="error-banner">Impossible de charger les équipes</div>
+  }
+
+  @if (teamsResource.value(); as teams) {
+    <div class="teams-grid">
+      @for (team of teams; track team.id) {
+        <div class="team-card">
+          <div class="team-card-header">
+            <h3>{{ team.name }}</h3>
+            <span class="team-badge">{{ team.members.length }} membre(s)</span>
+          </div>
+
+          <p class="team-creator">Créée par {{ team.createdBy }}</p>
+
+          <div class="team-members">
+            @for (member of team.members; track member.userId) {
+              <span class="member-chip">{{ member.username }}</span>
+            }
+          </div>
+
+          @if (isCurrentUserMember(team.members)) {
+            <button (click)="leaveTeam(team.id)" class="btn-secondary">Quitter l'équipe</button>
+            } @else if (canJoinTeam(team.members)) {
+                <button (click)="joinTeam(team.id)" class="btn-primary">Rejoindre</button>
+            }
+        </div>
+      } @empty {
+        <p class="empty-state">Aucune équipe créée pour l'instant. Sois le premier !</p>
+      }
+    </div>
+  }
+
+</div>

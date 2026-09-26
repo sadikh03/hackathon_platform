@@ -1,0 +1,147 @@
+.page-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.page-header {
+  margin-bottom: 32px;
+}
+
+.page-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1E293B;
+  margin: 0 0 4px 0;
+}
+
+.page-header p {
+  color: #64748B;
+  margin: 0;
+}
+
+.create-team-card {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 32px;
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(15, 41, 66, 0.06);
+}
+
+.team-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.team-input:focus {
+  outline: none;
+  border-color: #2563EB;
+}
+
+.btn-primary {
+  padding: 12px 24px;
+  background-color: #2563EB;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-primary:hover {
+  background-color: #1D4ED8;
+}
+
+.btn-secondary {
+  padding: 10px 20px;
+  background-color: #F1F5F9;
+  color: #1E293B;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+}
+
+.btn-secondary:hover {
+  background-color: #E2E8F0;
+}
+
+.teams-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.team-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(15, 41, 66, 0.06);
+}
+
+.team-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.team-card-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #0F2942;
+}
+
+.team-badge {
+  background-color: #EEF1F5;
+  color: #2563EB;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.team-creator {
+  color: #64748B;
+  font-size: 13px;
+  margin: 0 0 16px 0;
+}
+
+.team-members {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.member-chip {
+  background-color: #F1F5F9;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  color: #1E293B;
+}
+
+.loading-state, .empty-state {
+  text-align: center;
+  color: #64748B;
+  padding: 40px;
+}
+
+.error-banner {
+  background-color: #FEF2F2;
+  color: #DC2626;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-bottom: 20px;
+}

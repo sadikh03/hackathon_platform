@@ -1,0 +1,8 @@
+main {
+  min-height: 100vh;
+  background-color: #EEF1F5;
+}
+
+main.with-sidebar {
+  margin-left: 260px;
+}

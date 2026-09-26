@@ -1,0 +1,155 @@
+.page-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.page-header {
+  margin-bottom: 32px;
+}
+
+.page-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1E293B;
+  margin: 0 0 4px 0;
+}
+
+.page-header p {
+  color: #64748B;
+  margin: 0;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.tab-btn {
+  padding: 12px 20px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #64748B;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tab-btn.active {
+  color: #2563EB;
+  border-bottom-color: #2563EB;
+}
+
+.tab-content {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(15, 41, 66, 0.06);
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.users-table th {
+  text-align: left;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: #64748B;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.users-table td {
+  padding: 12px;
+  font-size: 14px;
+  color: #1E293B;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.role-select {
+  padding: 6px 10px;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.btn-danger {
+  padding: 6px 14px;
+  background-color: #FEF2F2;
+  color: #DC2626;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-danger:hover {
+  background-color: #FEE2E2;
+}
+
+.settings-card h3 {
+  margin: 0 0 12px 0;
+  color: #0F2942;
+}
+
+.current-deadline {
+  color: #64748B;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+.deadline-form {
+  display: flex;
+  gap: 12px;
+}
+
+.deadline-form input {
+  padding: 10px 14px;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.btn-primary {
+  padding: 10px 20px;
+  background-color: #2563EB;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #1D4ED8;
+}
+
+.loading-state {
+  text-align: center;
+  color: #64748B;
+  padding: 40px;
+}
+
+.error-banner {
+  background-color: #FEF2F2;
+  color: #DC2626;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+.success-banner {
+  background-color: #F0FDF4;
+  color: #16A34A;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-bottom: 20px;
+}

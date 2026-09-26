@@ -1,0 +1,153 @@
+<div class="page-container">
+
+  <div class="page-header">
+    <h1>Projets</h1>
+    <p>
+      @if (authService.hasRole('ROLE_PARTICIPANT')) { Soumettez le projet de votre équipe ou consultez les autres }
+      @else if (authService.hasRole('ROLE_JURY')) { Consultez et évaluez les projets soumis }
+      @else { Gérez l'ensemble des projets soumis }
+    </p>
+  </div>
+
+  @if (actionError()) { <div class="error-banner">{{ actionError() }}</div> }
+  @if (actionSuccess()) { <div class="success-banner">{{ actionSuccess() }}</div> }
+
+  <div class="projects-layout" [class.two-columns]="authService.hasRole('ROLE_PARTICIPANT')">
+
+    @if (authService.hasRole('ROLE_PARTICIPANT')) {
+      <div class="form-column">
+        <div class="form-card">
+          <h3>{{ editingProjectId() ? 'Modifier le projet' : 'Soumettre votre projet' }}</h3>
+
+          <div class="form-group">
+            <label>Titre</label>
+            <input type="text" [ngModel]="formData().title" (ngModelChange)="updateField('title', $event)" placeholder="Nom de votre projet" />
+          </div>
+
+          <div class="form-group">
+            <label>Description</label>
+            <textarea [ngModel]="formData().description" (ngModelChange)="updateField('description', $event)" rows="4" placeholder="Décrivez votre projet"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Lien GitHub (optionnel)</label>
+            <input type="text" [ngModel]="formData().githubLink" (ngModelChange)="updateField('githubLink', $event)" placeholder="https://github.com/..." />
+          </div>
+
+          @if (editingProjectId() || lastCreatedProjectId(); as targetId) {
+            <div class="form-group">
+                <label>Fichier du projet (PDF, zip...)</label>
+                <input type="file" (change)="onFileSelected($event)" />
+                <button
+                type="button"
+                (click)="uploadFile(editingProjectId() ?? lastCreatedProjectId()!)"
+                class="btn-secondary"
+                [disabled]="!selectedFile()">
+                Envoyer le fichier
+                </button>
+            </div>
+            }
+
+          <div class="form-actions">
+            <button (click)="submitProject()" class="btn-primary">
+              {{ editingProjectId() ? 'Enregistrer' : 'Soumettre' }}
+            </button>
+            @if (editingProjectId()) {
+              <button (click)="cancelEdit()" class="btn-secondary">Annuler</button>
+            }
+          </div>
+        </div>
+      </div>
+    }
+
+    <div class="list-column">
+      <h2 class="section-title">Tous les projets</h2>
+
+      @if (projectsResource.isLoading()) { <div class="loading-state">Chargement...</div> }
+
+      @if (projectsResource.value(); as projects) {
+        <div class="projects-grid">
+          @for (project of projects; track project.id) {
+            <div class="project-card">
+              <div class="project-card-header">
+                <h3>{{ project.title }}</h3>
+                <span class="team-badge">{{ project.teamName }}</span>
+              </div>
+
+              <p class="project-description">{{ project.description }}</p>
+
+              @if (project.githubLink) {
+                <a [href]="project.githubLink" target="_blank" class="github-link">Voir sur GitHub →</a>
+              }
+
+              @if (project.fileName) {
+                <div class="file-row">
+                    <a [href]="getDownloadUrl(project.id)" target="_blank" class="github-link">
+                    📎 {{ project.fileName }}
+                    </a>
+                    @if (authService.hasRole('ROLE_PARTICIPANT')) {
+                    <button (click)="deleteFile(project.id)" class="file-delete-btn">✕</button>
+                    }
+                </div>
+                }
+
+              @if (authService.hasRole('ROLE_PARTICIPANT')) {
+                <button (click)="startEdit(project)" class="btn-secondary">Modifier</button>
+              }
+
+              @if (authService.hasRole('ROLE_JURY')) {
+                @if (isEvaluated(project.id)) {
+                  <span class="evaluated-badge">✓ Déjà noté</span>
+                }
+                <button (click)="openEvaluation(project)" class="btn-secondary">
+                  {{ isEvaluated(project.id) ? 'Modifier la note' : 'Évaluer' }}
+                </button>
+              }
+
+              @if (authService.hasRole('ROLE_ADMIN')) {
+                <button (click)="deleteProject(project.id)" class="btn-danger">Supprimer</button>
+              }
+            </div>
+          } @empty {
+            <p class="empty-state">Aucun projet soumis pour l'instant.</p>
+          }
+        </div>
+      }
+    </div>
+
+  </div>
+
+  @if (evaluatingProject(); as project) {
+    <div class="modal-overlay" (click)="closeEvaluation()">
+      <div class="modal-card" (click)="$event.stopPropagation()">
+        <h3>Évaluer : {{ project.title }}</h3>
+
+        <div class="score-field">
+          <label>Innovation ({{ evalForm().innovationScore }}/10)</label>
+          <input type="range" min="0" max="10" [ngModel]="evalForm().innovationScore" (ngModelChange)="updateEvalField('innovationScore', $event)" />
+        </div>
+        <div class="score-field">
+          <label>Technique ({{ evalForm().technicalScore }}/10)</label>
+          <input type="range" min="0" max="10" [ngModel]="evalForm().technicalScore" (ngModelChange)="updateEvalField('technicalScore', $event)" />
+        </div>
+        <div class="score-field">
+          <label>Présentation ({{ evalForm().presentationScore }}/10)</label>
+          <input type="range" min="0" max="10" [ngModel]="evalForm().presentationScore" (ngModelChange)="updateEvalField('presentationScore', $event)" />
+        </div>
+
+        <textarea
+          [ngModel]="evalForm().comment"
+          (ngModelChange)="updateEvalField('comment', $event)"
+          placeholder="Commentaire (optionnel)"
+          rows="2"
+          class="comment-field"></textarea>
+
+        <div class="modal-actions">
+          <button (click)="submitEvaluation()" class="btn-primary">Enregistrer la note</button>
+          <button (click)="closeEvaluation()" class="btn-secondary">Annuler</button>
+        </div>
+      </div>
+    </div>
+  }
+
+</div>
